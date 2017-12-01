@@ -14,9 +14,9 @@ func main() {
 }
 
 func part1() (sum int) {
-	return sumOfIdenticalNeighborDigits(util.InputString())
+	return sumOfIdenticalNeighborDigits(util.InputCharacters())
 }
 
 func part2() (sum int) {
-	return sumOfIdenticalOppositeDigits(util.InputString())
+	return sumOfIdenticalOppositeDigits(util.InputCharacters())
 }
