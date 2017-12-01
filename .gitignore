@@ -24,7 +24,7 @@ _testmain.go
 *.prof
 
 .idea
-day*/day*
+day*/day*$
 
 /vendor
 Gopkg.lock
