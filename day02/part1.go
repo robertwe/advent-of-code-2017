@@ -10,27 +10,28 @@ func part1(lines []string) int {
 	checksum := 0
 	for _, line := range lines {
 		fields := strings.Fields(line)
-		max := maxOfAll(fields)
-		min := minOfAll(fields)
+		ints := util.ParseInts(fields)
+		max := maxOfAll(ints)
+		min := minOfAll(ints)
 		diff := max - min
 		checksum += diff
 	}
 	return checksum
 }
-func minOfAll(i []string) int {
+
+func minOfAll(i []int) int {
 	min := 0xffffff
 	for _, x := range i {
-		y := util.ParseInt(x)
-		if y < min {
-			min = y
+		if x < min {
+			min = x
 		}
 	}
 	return min
 }
-func maxOfAll(i []string) int {
+
+func maxOfAll(i []int) int {
 	max := 0
-	for _, x := range i {
-		y := util.ParseInt(x)
+	for _, y := range i {
 		if y > max {
 			max = y
 		}

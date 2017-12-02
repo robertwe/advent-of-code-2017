@@ -10,17 +10,13 @@ func part2(lines []string) int {
 	checksum := 0
 	for _, line := range lines {
 		fields := strings.Fields(line)
-		checksum += divider(fields)
+		ints := util.ParseInts(fields)
+		checksum += divider(ints)
 	}
 	return checksum
 }
 
-func divider(i []string) int {
-	var nums []int
-	for _, x := range i {
-		nums = append(nums, util.ParseInt(x))
-	}
-
+func divider(nums []int) int {
 	for _, a := range nums {
 		for _, b := range nums {
 			if a == b {
