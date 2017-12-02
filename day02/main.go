@@ -9,8 +9,6 @@ import (
 )
 
 func main() {
-	input := util.InputLines()
-
-	fmt.Println(assert.So(part1(input), should.Equal, 34925))
-	fmt.Println(assert.So(part2(input), should.Equal, 221))
+	fmt.Println(assert.So(part1(util.InputLines()), should.Equal, 34925))
+	fmt.Println(assert.So(part2(util.InputLines()), should.Equal, 221))
 }
