@@ -31,6 +31,7 @@ func Valid2(s string) bool {
 	return true
 }
 
+// TODO: move to util
 func Anagram(a, b string) bool {
 	if len(a) != len(b) {
 		return false
