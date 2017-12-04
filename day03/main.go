@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/mdwhatcott/advent-of-code/grid"
 	"github.com/mdwhatcott/advent-of-code/util"
 	"github.com/smartystreets/assertions/assert"
 	"github.com/smartystreets/assertions/should"
@@ -14,6 +15,15 @@ func main() {
 }
 
 func part1() int {
+	input := util.InputInt()
+	turtle := Start()
+	for {
+		turtle.Advance()
+		if turtle.id == input {
+			at := grid.NewPoint(float64(turtle.at.x), float64(turtle.at.y))
+			return int(grid.CityBlockDistance(at, grid.NewPoint(0, 0)))
+		}
+	}
 	return 438 // Solved using pen and paper! (TODO: solve using the turtle and manhattan distance)
 }
 
