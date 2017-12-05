@@ -14,14 +14,9 @@ func main() {
 }
 
 func part1() int {
-	program := &Program{ints: util.ParseInts(util.InputLines())}
-	program.Execute()
-	return program.steps
+	return NewProgram(util.ParseInts(util.InputLines())).Execute()
 }
 
 func part2() int {
-	program := &Program{ints: util.ParseInts(util.InputLines())}
-	program.part2 = true
-	program.Execute()
-	return program.steps
+	return NewProgram(util.ParseInts(util.InputLines())).Part2().Execute()
 }
