@@ -1,6 +1,10 @@
 package main
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/mdwhatcott/advent-of-code/util"
+)
 
 func Valid(s string) bool {
 	return Valid1(s) && Valid2(s)
@@ -23,39 +27,10 @@ func Valid2(s string) bool {
 			if a == b {
 				continue
 			}
-			if Anagram(x, y) {
+			if util.Anagram(x, y) {
 				return false
 			}
 		}
 	}
 	return true
-}
-
-// TODO: move to util
-func Anagram(a, b string) bool {
-	if len(a) != len(b) {
-		return false
-	}
-
-	aLetters := make(map[rune]int)
-	bLetters := make(map[rune]int)
-
-	for _, c := range a {
-		aLetters[c]++
-	}
-	for _, c := range b {
-		bLetters[c]++
-	}
-	for c, n := range aLetters {
-		if bLetters[c] != n {
-			return false
-		}
-	}
-	for c, n := range bLetters {
-		if aLetters[c] != n {
-			return false
-		}
-	}
-
-	return len(aLetters) == len(bLetters)
 }
