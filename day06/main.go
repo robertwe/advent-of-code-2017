@@ -5,17 +5,22 @@ import (
 	"strings"
 
 	"github.com/mdwhatcott/advent-of-code/util"
+	"github.com/smartystreets/assertions/assert"
+	"github.com/smartystreets/assertions/should"
 )
 
 func main() {
 	d := NewDebugger(util.ParseInts(strings.Fields(util.InputString())))
 	//d := NewDebugger([]int{0, 2, 7, 0})
+
 	part1 := d.Debug() + 1
-	fmt.Println(part1)
+
 	d.states = make(map[string]struct{})
 	d.states[fmt.Sprint(d.registers)] = struct{}{}
 	part2 := d.Debug()
-	fmt.Println(part2)
+
+	fmt.Println(assert.So(part1, should.Equal, 5042))
+	fmt.Println(assert.So(part2, should.Equal, 1086))
 }
 
 type Debugger struct {
@@ -33,24 +38,25 @@ func NewDebugger(registers []int) *Debugger {
 
 func (this *Debugger) Debug() int {
 	for {
-		largest := this.findLargestRegister()
-		value := this.registers[largest]
-		this.registers[largest] = 0
-		this.cursor = largest
-		for ; value > 0; value-- {
-			this.cursor++
-			if this.cursor >= len(this.registers) {
-				this.cursor = 0
-			}
-			this.registers[this.cursor]++
+		this.redistributeLargestBlock()
+		if this.alreadySeenCurrentRegisterState() {
+			break
 		}
-		state := fmt.Sprint(this.registers)
-		_, found := this.states[state]
-		if found {
-			return len(this.states)
-		} else {
-			this.states[state] = struct{}{}
+	}
+
+	return len(this.states)
+}
+func (this *Debugger) redistributeLargestBlock() {
+	largest := this.findLargestRegister()
+	value := this.registers[largest]
+	this.registers[largest] = 0
+	this.cursor = largest
+	for ; value > 0; value-- {
+		this.cursor++
+		if this.cursor >= len(this.registers) {
+			this.cursor = 0
 		}
+		this.registers[this.cursor]++
 	}
 }
 func (this *Debugger) findLargestRegister() int {
@@ -63,4 +69,12 @@ func (this *Debugger) findLargestRegister() int {
 		}
 	}
 	return index
+}
+func (this *Debugger) alreadySeenCurrentRegisterState() bool {
+	state := fmt.Sprint(this.registers)
+	_, found := this.states[state]
+	if !found {
+		this.states[state] = struct{}{}
+	}
+	return found
 }
