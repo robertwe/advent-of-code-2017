@@ -2,28 +2,6 @@ package main
 
 import "fmt"
 
-type Firewall []*Layer
-
-func (this Firewall) Scan() {
-	for _, layer := range this {
-		layer.Scan()
-	}
-}
-
-func (this Firewall) delay(ticks int) {
-	for x := 0; x < ticks; x++ {
-		this.Scan()
-	}
-}
-
-func (firewall Firewall) traverse() (cost int) {
-	for at := 0; at < len(firewall); at++ {
-		cost += firewall[at].Severity(at)
-		firewall.Scan()
-	}
-	return cost
-}
-
 type Layer struct {
 	Depth     int
 	layer     int
@@ -37,6 +15,14 @@ func NewLayer(depth int, layer int) *Layer {
 		layer:     layer,
 		increment: 1,
 	}
+}
+
+func (this *Layer) Reset() {
+	if this == nil {
+		return
+	}
+	this.increment = 1
+	this.position = 0
 }
 
 func (this *Layer) Scan() int {
@@ -54,6 +40,10 @@ func (this *Layer) travel() {
 	} else if this.position == 0 {
 		this.increment = -this.increment
 	}
+}
+
+func (this *Layer) Alarm() bool {
+	return this != nil && this.position == 0
 }
 
 func (this *Layer) Severity(layer int) int {

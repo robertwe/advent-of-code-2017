@@ -37,25 +37,13 @@ func (this *Stuff) TestSeverityOfScan() {
 }
 
 func (this *Stuff) TestSample() {
-	const input = `0: 3
-1: 2
-4: 4
-6: 4
-`
-	scanner := util.NewScanner(strings.NewReader(input))
+	scanner := util.NewScanner(strings.NewReader("0: 3 \n 1: 2 \n 4: 4 \n 6: 4"))
 	this.So(loadFirewall(scanner).traverse(), should.Equal, 24)
 }
 
 func (this *Stuff) TestSampleWithDelay() {
-	const input = `0: 3
-1: 2
-4: 4
-6: 4
-`
-
 	loader := func() Firewall {
-		scanner := util.NewScanner(strings.NewReader(input))
-		return loadFirewall(scanner)
+		return loadFirewall(util.NewScanner(strings.NewReader("0: 3 \n 1: 2 \n 4: 4 \n 6: 4")))
 	}
 	this.So(lowestSafeDelay(loader), should.Equal, 10)
 }
